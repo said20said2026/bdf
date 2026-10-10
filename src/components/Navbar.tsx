@@ -6,9 +6,15 @@ interface NavbarProps {
   currentMode: ToolMode;
   onSelectMode: (mode: ToolMode) => void;
   convertedCount: number;
+  onOpenPrivacyPolicy: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ currentMode, onSelectMode, convertedCount }) => {
+export const Navbar: React.FC<NavbarProps> = ({
+  currentMode,
+  onSelectMode,
+  convertedCount,
+  onOpenPrivacyPolicy,
+}) => {
   return (
     <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
@@ -56,11 +62,16 @@ export const Navbar: React.FC<NavbarProps> = ({ currentMode, onSelectMode, conve
           </button>
         </nav>
 
-        {/* Privacy badge */}
-        <div className="hidden lg:flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold">
+        {/* Privacy badge / button */}
+        <button
+          type="button"
+          onClick={onOpenPrivacyPolicy}
+          className="hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-800 text-xs font-bold transition-all cursor-pointer"
+          title="عرض سياسة الخصوصية"
+        >
           <ShieldCheck className="w-4 h-4 text-emerald-600" />
-          <span>خصوصية 100% بدون خوادم</span>
-        </div>
+          <span>سياسة الخصوصية والأمان</span>
+        </button>
       </div>
     </header>
   );
