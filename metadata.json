@@ -1,0 +1,6 @@
+{
+  "name": "DocuMorph PDF - محول وورد وصور إلى PDF",
+  "description": "أداة سريعة وآمنة ومجانية لتحويل ملفات وورد (Word DOCX) والصور المتعددة (JPG, PNG, WEBP) إلى ملفات PDF عالية الجودة مع خيارات التخصيص الكاملة.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
