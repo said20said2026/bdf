@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { DocxFileItem, DocxToPdfOptions, ConvertedHistoryItem } from '../types';
-import { renderDocxToContainer, convertDocxContainerToPdf } from '../utils/docxToPdf';
+import { renderDocxToContainer, convertDocxToPdf } from '../utils/docxToPdf';
 import { generateSampleDocx } from '../utils/sampleFiles';
 
 interface WordToPdfConverterProps {
@@ -118,15 +118,15 @@ export const WordToPdfConverter: React.FC<WordToPdfConverterProps> = ({ onConver
   };
 
   const handleConvert = async () => {
-    if (!previewContainerRef.current || !activeFile) return;
+    if (!activeFile) return;
 
     setIsConverting(true);
     setProgress(10);
     setProgressStep('بدء معالجة وتحويل صفحات المستند...');
 
     try {
-      const result = await convertDocxContainerToPdf(
-        previewContainerRef.current,
+      const result = await convertDocxToPdf(
+        activeFile,
         options,
         (prog, step) => {
           setProgress(prog);

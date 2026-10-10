@@ -1,3 +1,5 @@
+import JSZip from 'jszip';
+
 /**
  * Generates sample images as File objects for one-click testing
  */
@@ -78,7 +80,6 @@ export async function generateSampleImages(): Promise<File[]> {
 
     // Content based on type
     if (s.type === 'chart') {
-      // Draw dashboard cards and bars
       const cardY = 440;
       const cardW = 320;
       const cardH = 180;
@@ -116,7 +117,7 @@ export async function generateSampleImages(): Promise<File[]> {
         ctx.fillText(m.change, x + cardW / 2, cardY + 155);
       });
 
-      // Chart bars
+      // Chart container
       ctx.fillStyle = '#1e293b';
       ctx.beginPath();
       ctx.roundRect(startX, 680, 3 * cardW + 2 * gap, 480, 20);
@@ -127,7 +128,6 @@ export async function generateSampleImages(): Promise<File[]> {
       ctx.textAlign = 'right';
       ctx.fillText('نمو الاستخدام الشهري لملفات PDF', startX + (3 * cardW + 2 * gap) - 40, 740);
 
-      // Bars
       const bars = [40, 65, 55, 80, 95, 70, 110, 130, 160, 190];
       const barW = 60;
       const barGap = 35;
@@ -144,7 +144,6 @@ export async function generateSampleImages(): Promise<File[]> {
         ctx.fill();
       });
     } else if (s.type === 'certificate') {
-      // Certificate ribbon/seal
       ctx.fillStyle = '#fbbf24';
       ctx.beginPath();
       ctx.arc(canvas.width / 2, 540, 70, 0, Math.PI * 2);
@@ -158,7 +157,6 @@ export async function generateSampleImages(): Promise<File[]> {
       ctx.textAlign = 'center';
       ctx.fillText('★ 2026 ★', canvas.width / 2, 550);
 
-      // Recipient name
       ctx.fillStyle = '#0f172a';
       ctx.font = 'italic bold 44px "Cairo", serif';
       ctx.fillText('السيد / سامي عبد الرحمن والموقرين', canvas.width / 2, 700);
@@ -168,7 +166,6 @@ export async function generateSampleImages(): Promise<File[]> {
       ctx.fillText('تقديراً للمشاركة المتميزة وإنجاز كافة متطلبات التحويل الإلكتروني', canvas.width / 2, 770);
       ctx.fillText('بأعلى معايير الدقة والسرية والأمان وفق المواصفات القياسية.', canvas.width / 2, 815);
 
-      // Signatures
       ctx.strokeStyle = '#94a3b8';
       ctx.lineWidth = 2;
       ctx.beginPath();
@@ -183,7 +180,6 @@ export async function generateSampleImages(): Promise<File[]> {
       ctx.fillText('توقيع المشرف العام', 375, 1140);
       ctx.fillText('الختم والاعتماد الرسمي', 825, 1140);
     } else {
-      // Invoice sample
       const startY = 460;
       ctx.fillStyle = '#f8fafc';
       ctx.beginPath();
@@ -193,7 +189,6 @@ export async function generateSampleImages(): Promise<File[]> {
       ctx.lineWidth = 1.5;
       ctx.stroke();
 
-      // Table header
       ctx.fillStyle = '#e2e8f0';
       ctx.beginPath();
       ctx.roundRect(160, startY + 20, canvas.width - 320, 60, 8);
@@ -207,7 +202,6 @@ export async function generateSampleImages(): Promise<File[]> {
       ctx.fillText('السعر الإفرادي', canvas.width - 720, startY + 58);
       ctx.fillText('الإجمالي', 220, startY + 58);
 
-      // Rows
       const items = [
         { desc: 'تحويل وتجهيز مستندات Word و DOCX', qty: '15 ملف', price: '$20.00', total: '$300.00' },
         { desc: 'معالجة وتجميع ملفات الصور إلى PDF عالي الجودة', qty: '40 صورة', price: '$10.00', total: '$400.00' },
@@ -231,13 +225,11 @@ export async function generateSampleImages(): Promise<File[]> {
         ctx.stroke();
       });
 
-      // Total block
       ctx.fillStyle = '#059669';
       ctx.font = 'bold 32px "Cairo", sans-serif';
       ctx.fillText('المجموع النهائي المطلوب: $750.00', canvas.width - 200, startY + 450);
     }
 
-    // Footer
     ctx.fillStyle = s.type === 'chart' ? '#64748b' : '#94a3b8';
     ctx.font = '18px "Cairo", sans-serif';
     ctx.textAlign = 'center';
@@ -254,12 +246,11 @@ export async function generateSampleImages(): Promise<File[]> {
 }
 
 /**
- * Generates a valid sample DOCX file with rich Arabic content, headings, and table
- * Using standard minimal OpenXML ZIP structure
+ * Generates a valid sample DOCX file with rich Arabic content, headings, and table using JSZip
  */
 export async function generateSampleDocx(): Promise<File> {
-  // We can construct a minimal valid docx structure using JS zip format
-  // Or create a base64 encoded docx containing clean Arabic formatted content!
+  const zip = new JSZip();
+
   const docxXml = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
             xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">
@@ -271,9 +262,8 @@ export async function generateSampleDocx(): Promise<File> {
       </w:pPr>
       <w:r>
         <w:rPr>
-          <w:rFonts w:ascii="Cairo" w:cs="Cairo"/>
           <w:b/>
-          <w:sz w:val="56"/>
+          <w:sz w:val="52"/>
           <w:color w:val="0F172A"/>
         </w:rPr>
         <w:t>وثيقة العمل الرسمية والتقرير النموذجي</w:t>
@@ -286,7 +276,6 @@ export async function generateSampleDocx(): Promise<File> {
       </w:pPr>
       <w:r>
         <w:rPr>
-          <w:rFonts w:ascii="Cairo" w:cs="Cairo"/>
           <w:sz w:val="28"/>
           <w:color w:val="64748B"/>
         </w:rPr>
@@ -301,7 +290,6 @@ export async function generateSampleDocx(): Promise<File> {
       </w:pPr>
       <w:r>
         <w:rPr>
-          <w:rFonts w:ascii="Cairo" w:cs="Cairo"/>
           <w:b/>
           <w:sz w:val="36"/>
           <w:color w:val="1E3A8A"/>
@@ -316,7 +304,6 @@ export async function generateSampleDocx(): Promise<File> {
       </w:pPr>
       <w:r>
         <w:rPr>
-          <w:rFonts w:ascii="Cairo" w:cs="Cairo"/>
           <w:sz w:val="26"/>
           <w:color w:val="334155"/>
         </w:rPr>
@@ -331,7 +318,6 @@ export async function generateSampleDocx(): Promise<File> {
       </w:pPr>
       <w:r>
         <w:rPr>
-          <w:rFonts w:ascii="Cairo" w:cs="Cairo"/>
           <w:b/>
           <w:sz w:val="36"/>
           <w:color w:val="1E3A8A"/>
@@ -342,21 +328,21 @@ export async function generateSampleDocx(): Promise<File> {
     <w:p>
       <w:pPr><w:jc w:val="right"/><w:bidi/></w:pPr>
       <w:r>
-        <w:rPr><w:rFonts w:ascii="Cairo" w:cs="Cairo"/><w:sz w:val="24"/><w:color w:val="059669"/></w:rPr>
-        <w:t>✓ سرعة فائقة ومعالجة فورية داخل جهازك.</w:t>
+        <w:rPr><w:sz w:val="24"/><w:color w:val="059669"/></w:rPr>
+        <w:t>✓ سرعة فائقة ومعالجة فورية داخل جهازك دون رفع المستند.</w:t>
       </w:r>
     </w:p>
     <w:p>
       <w:pPr><w:jc w:val="right"/><w:bidi/></w:pPr>
       <w:r>
-        <w:rPr><w:rFonts w:ascii="Cairo" w:cs="Cairo"/><w:sz w:val="24"/><w:color w:val="059669"/></w:rPr>
+        <w:rPr><w:sz w:val="24"/><w:color w:val="059669"/></w:rPr>
         <w:t>✓ دقة عالية في تخطيط الصفحات والهوامش وحفظ الخطوط.</w:t>
       </w:r>
     </w:p>
     <w:p>
       <w:pPr><w:jc w:val="right"/><w:bidi/></w:pPr>
       <w:r>
-        <w:rPr><w:rFonts w:ascii="Cairo" w:cs="Cairo"/><w:sz w:val="24"/><w:color w:val="059669"/></w:rPr>
+        <w:rPr><w:sz w:val="24"/><w:color w:val="059669"/></w:rPr>
         <w:t>✓ الحفاظ الكامل على الخصوصية والسرية المصرفية والوثائقية.</w:t>
       </w:r>
     </w:p>
@@ -364,14 +350,6 @@ export async function generateSampleDocx(): Promise<File> {
     <w:tbl>
       <w:tblPr>
         <w:tblW w:w="5000" w:type="pct"/>
-        <w:tblBorders>
-          <w:top w:val="single" w:sz="6" w:space="0" w:color="CBD5E1"/>
-          <w:left w:val="single" w:sz="6" w:space="0" w:color="CBD5E1"/>
-          <w:bottom w:val="single" w:sz="6" w:space="0" w:color="CBD5E1"/>
-          <w:right w:val="single" w:sz="6" w:space="0" w:color="CBD5E1"/>
-          <w:insideH w:val="single" w:sz="4" w:space="0" w:color="E2E8F0"/>
-          <w:insideV w:val="single" w:sz="4" w:space="0" w:color="E2E8F0"/>
-        </w:tblBorders>
       </w:tblPr>
       <w:tr>
         <w:tc><w:p><w:pPr><w:jc w:val="center"/><w:bidi/></w:pPr><w:r><w:rPr><w:b/><w:sz w:val="24"/></w:rPr><w:t>الحالة</w:t></w:r></w:p></w:tc>
@@ -389,10 +367,6 @@ export async function generateSampleDocx(): Promise<File> {
         <w:tc><w:p><w:pPr><w:jc w:val="center"/><w:bidi/></w:pPr><w:r><w:t>الصور (JPG, PNG, WebP)</w:t></w:r></w:p></w:tc>
       </w:tr>
     </w:tbl>
-    <w:sectPr>
-      <w:pgSz w:w="11906" w:h="16838"/>
-      <w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="1440"/>
-    </w:sectPr>
   </w:body>
 </w:document>`;
 
@@ -408,134 +382,16 @@ export async function generateSampleDocx(): Promise<File> {
   <Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/>
 </Relationships>`;
 
-  // Create a minimal in-memory zip for docx using standard zip spec
-  const zipBuffer = buildSimpleZip([
-    { name: '[Content_Types].xml', content: contentTypesXml },
-    { name: '_rels/.rels', content: relsXml },
-    { name: 'word/document.xml', content: docxXml },
-  ]);
+  zip.file('[Content_Types].xml', contentTypesXml);
+  zip.file('_rels/.rels', relsXml);
+  zip.file('word/document.xml', docxXml);
 
-  return new File([zipBuffer], 'sample_document_نموذج_وورد.docx', {
+  const blob = await zip.generateAsync({
+    type: 'blob',
+    mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  });
+
+  return new File([blob], 'sample_document_نموذج_وورد.docx', {
     type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
   });
-}
-
-/**
- * Minimal lightweight pure JS ZIP builder for uncompressed store files
- */
-function buildSimpleZip(files: { name: string; content: string }[]): ArrayBuffer {
-  const fileRecords: {
-    nameBytes: Uint8Array;
-    contentBytes: Uint8Array;
-    offset: number;
-    crc: number;
-  }[] = [];
-
-  let currentOffset = 0;
-  const parts: Uint8Array[] = [];
-
-  for (const f of files) {
-    const enc = new TextEncoder();
-    const nameBytes = enc.encode(f.name);
-    const contentBytes = enc.encode(f.content);
-    const crc = crc32(contentBytes);
-
-    // Local file header (30 bytes + name length)
-    const header = new Uint8Array(30 + nameBytes.length);
-    const view = new DataView(header.buffer);
-    view.setUint32(0, 0x04034b50, true); // signature
-    view.setUint16(4, 10, true); // version needed
-    view.setUint16(6, 0, true); // general purpose flags
-    view.setUint16(8, 0, true); // compression: 0 = store
-    view.setUint16(10, 0, true); // mod time
-    view.setUint16(12, 0, true); // mod date
-    view.setUint32(14, crc, true); // crc32
-    view.setUint32(18, contentBytes.length, true); // compressed size
-    view.setUint32(22, contentBytes.length, true); // uncompressed size
-    view.setUint16(26, nameBytes.length, true); // filename length
-    view.setUint16(28, 0, true); // extra field length
-    header.set(nameBytes, 30);
-
-    fileRecords.push({
-      nameBytes,
-      contentBytes,
-      offset: currentOffset,
-      crc,
-    });
-
-    parts.push(header);
-    parts.push(contentBytes);
-    currentOffset += header.length + contentBytes.length;
-  }
-
-  // Central directory
-  const cdOffset = currentOffset;
-  let cdSize = 0;
-
-  for (const rec of fileRecords) {
-    const cdHeader = new Uint8Array(46 + rec.nameBytes.length);
-    const view = new DataView(cdHeader.buffer);
-    view.setUint32(0, 0x02014b50, true); // signature
-    view.setUint16(4, 10, true); // version made by
-    view.setUint16(6, 10, true); // version needed
-    view.setUint16(8, 0, true); // flags
-    view.setUint16(10, 0, true); // compression: 0 = store
-    view.setUint16(12, 0, true); // time
-    view.setUint16(14, 0, true); // date
-    view.setUint32(16, rec.crc, true); // crc
-    view.setUint32(20, rec.contentBytes.length, true); // comp size
-    view.setUint32(24, rec.contentBytes.length, true); // uncomp size
-    view.setUint16(28, rec.nameBytes.length, true); // name len
-    view.setUint16(30, 0, true); // extra len
-    view.setUint16(32, 0, true); // comment len
-    view.setUint16(34, 0, true); // disk start
-    view.setUint16(36, 0, true); // internal attr
-    view.setUint32(38, 0, true); // external attr
-    view.setUint32(42, rec.offset, true); // local header offset
-    cdHeader.set(rec.nameBytes, 46);
-
-    parts.push(cdHeader);
-    cdSize += cdHeader.length;
-  }
-
-  // End of central directory record (22 bytes)
-  const eocd = new Uint8Array(22);
-  const viewEocd = new DataView(eocd.buffer);
-  viewEocd.setUint32(0, 0x06054b50, true); // signature
-  viewEocd.setUint16(4, 0, true); // disk num
-  viewEocd.setUint16(6, 0, true); // disk cd start
-  viewEocd.setUint16(8, fileRecords.length, true); // num records on disk
-  viewEocd.setUint16(10, fileRecords.length, true); // total records
-  viewEocd.setUint32(12, cdSize, true); // cd size
-  viewEocd.setUint32(16, cdOffset, true); // cd offset
-  viewEocd.setUint16(20, 0, true); // comment len
-  parts.push(eocd);
-
-  // Combine
-  const totalLength = parts.reduce((acc, p) => acc + p.length, 0);
-  const merged = new Uint8Array(totalLength);
-  let pos = 0;
-  for (const p of parts) {
-    merged.set(p, pos);
-    pos += p.length;
-  }
-
-  return merged.buffer;
-}
-
-function crc32(bytes: Uint8Array): number {
-  let c = 0xffffffff;
-  for (let i = 0; i < bytes.length; i++) {
-    c = (c >>> 8) ^ table[(c ^ bytes[i]) & 0xff];
-  }
-  return (c ^ 0xffffffff) >>> 0;
-}
-
-const table = new Uint32Array(256);
-for (let n = 0; n < 256; n++) {
-  let c = n;
-  for (let k = 0; k < 8; k++) {
-    c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1;
-  }
-  table[n] = c;
 }
