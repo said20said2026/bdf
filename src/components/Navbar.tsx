@@ -7,6 +7,8 @@ interface NavbarProps {
   onSelectMode: (mode: ToolMode) => void;
   convertedCount: number;
   onOpenPrivacyPolicy: () => void;
+  onOpenAboutUs: () => void;
+  onOpenContactUs: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -14,6 +16,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   onSelectMode,
   convertedCount,
   onOpenPrivacyPolicy,
+  onOpenAboutUs,
+  onOpenContactUs,
 }) => {
   return (
     <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200">
@@ -62,16 +66,34 @@ export const Navbar: React.FC<NavbarProps> = ({
           </button>
         </nav>
 
-        {/* Privacy badge / button */}
-        <button
-          type="button"
-          onClick={onOpenPrivacyPolicy}
-          className="hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-800 text-xs font-bold transition-all cursor-pointer"
-          title="عرض سياسة الخصوصية"
-        >
-          <ShieldCheck className="w-4 h-4 text-emerald-600" />
-          <span>سياسة الخصوصية والأمان</span>
-        </button>
+        {/* Right action buttons */}
+        <div className="hidden sm:flex items-center gap-2">
+          <button
+            type="button"
+            onClick={onOpenAboutUs}
+            className="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-all cursor-pointer"
+            title="من نحن - نبذة عن الموقع"
+          >
+            <span>من نحن</span>
+          </button>
+          <button
+            type="button"
+            onClick={onOpenContactUs}
+            className="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-all cursor-pointer"
+            title="اتصل بنا"
+          >
+            <span>اتصل بنا</span>
+          </button>
+          <button
+            type="button"
+            onClick={onOpenPrivacyPolicy}
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-800 text-xs font-bold transition-all cursor-pointer"
+            title="عرض سياسة الخصوصية"
+          >
+            <ShieldCheck className="w-4 h-4 text-emerald-600" />
+            <span>الخصوصية</span>
+          </button>
+        </div>
       </div>
     </header>
   );

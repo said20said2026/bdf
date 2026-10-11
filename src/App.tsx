@@ -25,12 +25,16 @@ import { FaqSection } from './components/FaqSection';
 import { Footer } from './components/Footer';
 import { PrivacyPolicyModal } from './components/PrivacyPolicyModal';
 import { TermsOfServiceModal } from './components/TermsOfServiceModal';
+import { AboutUsModal } from './components/AboutUsModal';
+import { ContactUsModal } from './components/ContactUsModal';
 
 export default function App() {
   const [currentMode, setCurrentMode] = useState<ToolMode>('images-to-pdf');
   const [history, setHistory] = useState<ConvertedHistoryItem[]>([]);
   const [isPrivacyModalOpen, setIsPrivacyModalOpen] = useState(false);
   const [isTermsModalOpen, setIsTermsModalOpen] = useState(false);
+  const [isAboutUsModalOpen, setIsAboutUsModalOpen] = useState(false);
+  const [isContactUsModalOpen, setIsContactUsModalOpen] = useState(false);
 
   const handleConversionSuccess = (item: ConvertedHistoryItem) => {
     setHistory((prev) => [item, ...prev]);
@@ -48,6 +52,8 @@ export default function App() {
         onSelectMode={setCurrentMode}
         convertedCount={history.length}
         onOpenPrivacyPolicy={() => setIsPrivacyModalOpen(true)}
+        onOpenAboutUs={() => setIsAboutUsModalOpen(true)}
+        onOpenContactUs={() => setIsContactUsModalOpen(true)}
       />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
@@ -128,6 +134,8 @@ export default function App() {
       <Footer
         onOpenPrivacyPolicy={() => setIsPrivacyModalOpen(true)}
         onOpenTermsOfService={() => setIsTermsModalOpen(true)}
+        onOpenAboutUs={() => setIsAboutUsModalOpen(true)}
+        onOpenContactUs={() => setIsContactUsModalOpen(true)}
       />
 
       {/* Privacy Policy Modal */}
@@ -140,6 +148,18 @@ export default function App() {
       <TermsOfServiceModal
         isOpen={isTermsModalOpen}
         onClose={() => setIsTermsModalOpen(false)}
+      />
+
+      {/* About Us Modal */}
+      <AboutUsModal
+        isOpen={isAboutUsModalOpen}
+        onClose={() => setIsAboutUsModalOpen(false)}
+      />
+
+      {/* Contact Us Modal */}
+      <ContactUsModal
+        isOpen={isContactUsModalOpen}
+        onClose={() => setIsContactUsModalOpen(false)}
       />
     </div>
   );

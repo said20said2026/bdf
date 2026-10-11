@@ -1,12 +1,19 @@
 import React from 'react';
-import { FileText, Shield, Lock } from 'lucide-react';
+import { FileText, Shield, Lock, Users, Mail } from 'lucide-react';
 
 interface FooterProps {
   onOpenPrivacyPolicy: () => void;
   onOpenTermsOfService: () => void;
+  onOpenAboutUs: () => void;
+  onOpenContactUs: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onOpenPrivacyPolicy, onOpenTermsOfService }) => {
+export const Footer: React.FC<FooterProps> = ({
+  onOpenPrivacyPolicy,
+  onOpenTermsOfService,
+  onOpenAboutUs,
+  onOpenContactUs,
+}) => {
   return (
     <footer className="border-t border-slate-200 bg-white py-12 mt-16 text-slate-500 text-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
@@ -21,7 +28,25 @@ export const Footer: React.FC<FooterProps> = ({ onOpenPrivacyPolicy, onOpenTerms
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-5 text-xs font-semibold text-slate-600">
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-5 text-xs font-semibold text-slate-600">
+            <button
+              type="button"
+              onClick={onOpenAboutUs}
+              className="text-slate-700 hover:text-amber-600 font-bold transition-colors cursor-pointer flex items-center gap-1.5"
+            >
+              <Users className="w-3.5 h-3.5 text-amber-500" />
+              <span>من نحن</span>
+            </button>
+            <span className="text-slate-300">•</span>
+            <button
+              type="button"
+              onClick={onOpenContactUs}
+              className="text-slate-700 hover:text-emerald-600 font-bold transition-colors cursor-pointer flex items-center gap-1.5"
+            >
+              <Mail className="w-3.5 h-3.5 text-emerald-500" />
+              <span>اتصل بنا</span>
+            </button>
+            <span className="text-slate-300">•</span>
             <button
               type="button"
               onClick={onOpenPrivacyPolicy}
